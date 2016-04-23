@@ -1,0 +1,16 @@
+Version 1.1.1  (CURRENT VERSION)
+* Update to newest ModuleManager version
+* Add more optional config files to do various things
+
+Version 1.1  (2016-03-31)
+* Required update for KSP 1.1. Older versions of BetterBurnTime won't work on 1.1.
+* No new features; this is a compatibility update only.
+
+
+----- Everything above this line will run ONLY on KSP 1.1 and newer -----
+
+----- Everything below this line will run ONLY on KSP 1.0.5 and older -----
+
+
+Version 1.0  (2015-11-18)
+* Initial release.
