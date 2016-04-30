@@ -1,4 +1,8 @@
-Version 1.1.1  (CURRENT VERSION)
+Version 1.1.2  (CURRENT VERSION)
+* Update to ModuleManager 2.6.24 (required for compatibility with KSP 1.1.2)
+
+
+Version 1.1.1  (2016-04-22)
 * Update to newest ModuleManager version
 * Add more optional config files to do various things
 
