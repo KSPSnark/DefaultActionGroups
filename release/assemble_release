@@ -1,0 +1,11 @@
+echo Creating release file structure for $1
+mkdir -p $1/GameData/DefaultActionGroups
+cp ../files/ModuleManager.*.dll $1/GameData
+cp ../files/ModuleManagerLicense.md $1/GameData
+cp ../files/changelog.txt $1/GameData/DefaultActionGroups
+cp ../src/bin/Release/DefaultActionGroups.dll $1/GameData/DefaultActionGroups
+cp ../LICENSE $1/GameData/DefaultActionGroups
+cp ../README.md $1/GameData/DefaultActionGroups
+mkdir -p $1/Optional/GameData/DefaultActionGroups
+cp ../files/optional/*.cfg $1/Optional/GameData/DefaultActionGroups
+echo Done.

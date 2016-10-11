@@ -6,6 +6,8 @@ namespace DefaultActionGroups
     [KSPAddon(KSPAddon.Startup.Instantly, false)]
     class SplashScreen : MonoBehaviour
     {
+        private static float MAX_TIP_TIME = 4; // seconds
+
         private static readonly string[] NEW_TIPS =
         {
             "Configuring Default Action Groups..."
@@ -14,7 +16,11 @@ namespace DefaultActionGroups
         internal void Awake()
         {
             LoadingScreen.LoadingScreenState state = FindLoadingScreenState();
-            if (state != null) InsertTips(state);
+            if (state != null)
+            {
+                InsertTips(state);
+                if (state.tipTime > MAX_TIP_TIME) state.tipTime = MAX_TIP_TIME;
+            }
         }
 
         /// <summary>
