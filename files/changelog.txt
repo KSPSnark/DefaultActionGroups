@@ -1,4 +1,9 @@
-Version 1.2.3
+Version 1.2.4  (2018-03-15)
+* Update to ModuleManager 3.0.6 for KSP 1.4.1 compatibility
+* Add optional config for "gather science" via action group Custom08.
+
+
+Version 1.2.3  (2017-05-29)
 * Fix optional config for solar panels to handle recent Kopernicus update. (Thanks to Errol from KSP forums for catching!)
 
 
