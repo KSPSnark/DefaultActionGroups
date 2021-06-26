@@ -6,13 +6,18 @@
     public class ModuleDefaultActionGroup : PartModule
     {
         /// <summary>
+        /// The (non-localized) action name for ModuleAnimateGeneric's toggle action.
+        /// </summary>
+        private const string ANIMATION_TOGGLE_ACTION = "ToggleAction";
+
+        /// <summary>
         /// The module in which to find the animation to use (e.g. "ModuleAnimateGeneric")
         /// </summary>
         [KSPField]
         public string moduleSource;
 
         /// <summary>
-        /// The GUI name of the action to work on, for toggling state (e.g. "Toggle").
+        /// The name of the action to work on, for toggling state (e.g. "Toggle").
         /// Ideally this should be called "toggleActionGuiName", but I already called it
         /// actionGuiName long ago and don't want to break backwards compatibility
         /// with folks who are already using the mod.
@@ -22,22 +27,17 @@
         /// will be ignored.
         /// </summary>
         [KSPField]
-        public string actionGuiName;
+        public string actionName;
 
         /// <summary>
-        /// The GUI name to activate the specified action (e.g. "Activate").  If
-        /// this is defined, typically deactivateGuiName will also be defined, and
-        /// actionGuiName won't.
+        /// DEPRECATED. Like actionName, but uses the GUI name of the action, instead.
+        /// If both actionGuiName and actionName are specified, then actionName will be
+        /// used and actionGuiName is ignored.
+        /// (This is deprecated because it doesn't play nice with localization; if you
+        /// use a GUI name, it will only work in one particular language.)
         /// </summary>
         [KSPField]
-        public string activateGuiName;
-
-        /// <summary>
-        /// The GUI name to activate the specified action (e.g. "Activate").  If
-        /// this is defined, typically activateGuiName will also be defined, and
-        /// actionGuiName won't.
-        [KSPField]
-        public string deactivateGuiName;
+        public string actionGuiName;
 
         /// <summary>
         /// The action group (or groups) that it should be added to by default.
@@ -53,6 +53,44 @@
             get
             {
                 return !string.IsNullOrEmpty(actionGuiName);
+            }
+        }
+
+        /// <summary>
+        /// Determines whether this module matches the specified action, by name. If actionName
+        /// is specified, uses that.  Otherwise, will fall back on actionGuiName.
+        /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public bool MatchesActionName(BaseAction action)
+        {
+            if (string.IsNullOrEmpty(actionName))
+            {
+                return action.guiName == actionGuiName;
+            }
+            else
+            {
+                return action.name == actionName;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether this module matches the specified animation module, testing
+        /// actionName against the animation module's (non-localized) toggle action name
+        /// and animationName.  If actionName isn't specified, it tests actionGuiName against
+        /// the animation module's actionGUIName.
+        /// </summary>
+        /// <param name="animation"></param>
+        /// <returns></returns>
+        public bool MatchesAnimation(ModuleAnimateGeneric animation)
+        {
+            if (string.IsNullOrEmpty(actionName))
+            {
+                return animation.actionGUIName == actionGuiName;
+            }
+            else
+            {
+                return (ANIMATION_TOGGLE_ACTION == actionName) || (animation.animationName == actionName);
             }
         }
     }

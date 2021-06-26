@@ -118,18 +118,10 @@ namespace DefaultActionGroups
                 return;
             }
 
-            ModuleColorChanger colorChangerModule = module as ModuleColorChanger;
-            if (colorChangerModule != null)
-            {
-                // this also needs special handling
-                handleDefaultGroupsForColorChangerModule(part, colorChangerModule, defaultActionGroupModule);
-                return;
-            }
-
-            // For anything else, we use the GUI name of the action itself.
+            // For anything else, we use the name of the action itself.
             foreach (BaseAction action in module.Actions)
             {
-                if (action.guiName == defaultActionGroupModule.actionGuiName)
+                if (defaultActionGroupModule.MatchesActionName(action))
                 {
                     Logging.Log("Updating action groups for "
                         + part.name + "/" + module.moduleName + "/" + action.guiName
@@ -155,7 +147,7 @@ namespace DefaultActionGroups
             // ModuleAnimateGeneric needs special handling. If we just ask its actions about their guiName, they'll
             // give a name that's not actually displayed in the editor. So for this case, we ask the module itself
             // for its action GUI name.
-            if (animationModule.actionGUIName == defaultActionGroupModule.actionGuiName)
+            if (defaultActionGroupModule.MatchesAnimation(animationModule))
             {
                 foreach (BaseAction action in animationModule.Actions)
                 {
@@ -166,28 +158,6 @@ namespace DefaultActionGroups
                     action.defaultActionGroup |= defaultActionGroupModule.defaultActionGroup;
                 }
             }
-        }
-
-        /// <summary>
-        /// Special handling for ModuleColorChanger.  Needs special handling because we can't go by the GUI
-        /// name of the action, at least not if it's the root part.  Reason: that module changes the GUI name
-        /// at start time, which happens *after* the part being created.
-        /// </summary>
-        /// <param name="part"></param>
-        /// <param name="colorChangerModule"></param>
-        /// <param name="defaultActionGroupModule"></param>
-        private static void handleDefaultGroupsForColorChangerModule(
-            Part part,
-            ModuleColorChanger colorChangerModule,
-            ModuleDefaultActionGroup defaultActionGroupModule)
-        {
-            if (colorChangerModule.toggleName != defaultActionGroupModule.actionGuiName) return;
-            BaseAction toggleAction = colorChangerModule.Actions["ToggleAction"];
-            Logging.Log("Updating action groups for "
-                + part.name + "/" + colorChangerModule.moduleName + "/" + toggleAction.guiName
-                + " to include " + defaultActionGroupModule.defaultActionGroup);
-            toggleAction.actionGroup |= defaultActionGroupModule.defaultActionGroup;
-            toggleAction.defaultActionGroup |= defaultActionGroupModule.defaultActionGroup;
         }
     }
 }

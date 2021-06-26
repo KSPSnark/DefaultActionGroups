@@ -1,3 +1,12 @@
+Version 1.4  (2021-06-27)
+* Added feature to use NON-localized names of actions in config files (more stable & robust).
+* Updated handling of ModuleAnimateGeneric. You can specify actionName as "ToggleAction" or as the value of animationName.
+* The old system, based on localized action names, is deprecated but still works.
+* Caveat: any usage with ModuleColorChanger needs to switch to the new, non-localized method.
+* Updated most of the optional configs to use the new, non-localized config option.
+* Update to ModuleManager 4.1.4.
+
+
 Version 1.3  (2019-10-16)
 * Update for KSP 1.8 compatibility.
 * Includes update to ModuleManager 4.1.0.
